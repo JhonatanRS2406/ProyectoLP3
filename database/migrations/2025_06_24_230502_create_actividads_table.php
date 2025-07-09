@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('actividads', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string("tipo");
+            $table->date("fecha");
+            $table->foreignId('idUsuario')->constrained('users')->onDelete('cascade');
         });
     }
 

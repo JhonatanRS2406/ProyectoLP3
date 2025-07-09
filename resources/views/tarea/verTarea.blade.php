@@ -71,12 +71,41 @@
         <nav class="navbar">
             <div class="logo">Healtnny</div>
             <ul>
-                <li><a href="/usuario/miperfil">Mi perfil</a></li>
+                <li><a href="/usuario/miperfil">Mi Perfil</a></li>
                 <li><a href="/usuario/tarea/ver">Tareas</a></li>
                 <li><a href="/usuario/reporte">Reportes</a></li>
-                <li><a href="contact.asp">Notificaciones</a></li>
-                <li><a href="about.asp">FAQ</a></li>
+                <li><a href="/usuario/notificacion">Notificaciones</a></li>
+                <li><a href="/FAQ">FAQ</a></li>
             </ul>
+            <ul>
+                  @if (Route::has('login'))
+                        @auth
+                            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit">
+                                    Cerrar Sesión
+                                </button>
+                            </form>
+                        @else
+                            <a
+                                href="{{ route('login') }}"
+                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                            >
+                                Iniciar Sesión
+                            </a>
+                            @if (Route::has('register'))
+                                <a
+                                    href="{{ route('register') }}"
+                                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                >
+                                    Registrar
+                                </a>
+                            @endif
+                        @endauth
+                    @endif
+
+            </ul>
+           
         </nav>
 
         <div class="content">

@@ -56,6 +56,7 @@ Route::get("/usuario/notificacion",function(){
 Route::get("/FAQ",function(){
     return view("faq.verFAQ");
 });
+
 // Reporte //
 
 Route::get("/usuario/reporte",function(){

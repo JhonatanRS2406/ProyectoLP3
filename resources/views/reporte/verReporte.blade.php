@@ -71,11 +71,11 @@
         <nav class="navbar">
             <div class="logo">Healtnny</div>
             <ul>
-                <li><a href="/usuario/miperfil">Mi perfil</a></li>
+                <li><a href="/usuario/miperfil">Mi Perfil</a></li>
                 <li><a href="/usuario/tarea/ver">Tareas</a></li>
                 <li><a href="/usuario/reporte">Reportes</a></li>
-                <li><a href="contact.asp">Notificaciones</a></li>
-                <li><a href="about.asp">FAQ</a></li>
+                <li><a href="/usuario/notificacion">Notificaciones</a></li>
+                <li><a href="/FAQ">FAQ</a></li>
             </ul>
         </nav>
 

@@ -1,15 +1,17 @@
+<head>FAQ</head>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Registrar Usuario</title>
-
-        
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        <title>Preguntas Frecuentes</title>
 
        
+        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+
+        
         <style>
             .navbar {
                 background-color: #90EE90;
@@ -50,41 +52,35 @@
                 color: #333;
             }
             .content {
-                margin-top: 80px; 
+                margin-top: 80px;
                 padding: 2rem;
                 text-align: center;
             }
-            form {
-                display: flex;
-                flex-direction: column;
-                width: 300px;
-                margin: auto;
+            table {
+                margin: 2rem auto;
+                border-collapse: collapse;
+                width: 50%;
             }
-            .box {
+            th {
                 border: 1px solid black;
-                width: 300px;
-                margin: 170px auto 160px; 
-                padding: 100px;
-                background-color: rgba(76, 163, 226, 0.56);
-            }
-            h1 {
-                text-align: center;
-                color: rgba(110, 75, 169, 0.72);
-            }
-            input[type="text"],
-            input[type="email"],
-            input[type="submit"] {
-                margin-bottom: 1rem;
                 padding: 0.5rem;
-            }
-            input[type="submit"] {
-                cursor: pointer;
                 background-color: #f4f4f4;
-                border: 1px solid #ccc;
             }
         </style>
     </head>
     <body>
+        
+        <nav class="navbar">
+            <div class="logo">Healtnny</div>
+            <ul>
+                <li><a href="/usuario/miperfil">Mi Perfil</a></li>
+                <li><a href="/usuario/tarea/ver">Tareas</a></li>
+                <li><a href="/usuario/reporte">Reportes</a></li>
+                <li><a href="/usuario/notificacion">Notificaciones</a></li>
+                <li><a href="/FAQ">FAQ</a></li>
+            </ul>
+        </nav>
+    
     
         <nav class="navbar">
             <div class="logo">Healtnny</div>
@@ -92,7 +88,8 @@
                 <li><a href="/usuario/tarea/ver">Tareas</a></li>
                 <li><a href="/usuario/reporte">Reportes</a></li>
                 <li><a href="contact.asp">Notificaciones</a></li>
-        
+        </nav>
+    
    
        
     

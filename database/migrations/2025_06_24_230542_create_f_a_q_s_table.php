@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('f_a_q_s', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string("pregunta");
+            $table->text("respuesta");
         });
     }
 

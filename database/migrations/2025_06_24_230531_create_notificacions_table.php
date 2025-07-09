@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('notificacions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->text("mensaje");
+            $table->date("fechaNotificacion");
+            $table->foreignId('idUsuario')->constrained('users')->onDelete('cascade');
         });
     }
 

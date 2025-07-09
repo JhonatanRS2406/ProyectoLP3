@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('reportes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('tipo');
+            $table->date('semanaReporte');
+            $table->string('estadisticas');
+            $table->text("recomendacion");
+            $table->foreignId('idUsuario')->constrained('users')->onDelete('cascade');
         });
     }
 
