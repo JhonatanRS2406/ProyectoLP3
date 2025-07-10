@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\FAQController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\TareaController;
+use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\NotificacionController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,56 +19,43 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Ususario //
 
-Route::get("/usuario/miperfil",function(){
-    return view("usuario.verUsuario");
-});
+Route::get("/usuario/miperfil",[UsuarioController::class,'mostrar']);
+ 
+Route::get("/usuario/crear",[UsuarioController::class,'crear']);
 
-Route::get("/usuario/crear",function(){
-    return view("usuario.crearUsuario");
-});
+Route::get("/usuario/actualizar",[UsuarioController::class,'editar']);
 
-Route::get("/usuario/actualizar",function(){
-    return view("usuario.actualizarUsuario");
-});
-
-Route::put("/usuario/guardar",function(){
-            return view("usuario.crearUsuario");
-});
+Route::put("/usuario/guardar",[UsuarioController::class,'guardar']);
 
 // Tareas //
 
-Route::get("usuario/tarea/crear",function(){
-    return view("tarea.crearTarea");
-});
+Route::get("usuario/tarea/crear",[TareaController::class,'crear']);
 
-Route::get("/usuario/tarea/ver",function(){
-    return view("tarea.verTarea");
-});
+Route::get("/usuario/tarea/ver",[TareaController::class,'mostrar']);
 
-Route::get("/usuario/tarea/modificar",function(){
-    return view("tarea.actualizarTarea");
-});
+Route::get("/usuario/tarea/modificar",[TareaController::class,'editar']);
 
-Route::put("/usuario/tarea/guardar",function(){
-            return view("tarea.crearTarea");
-});
+Route::put("/usuario/tarea/guardar",[TareaController::class,'guardar']);
 
 // Actividad //
 // Notificacion //
-Route::get("/usuario/notificacion",function(){
-    return view("notificacion.verNotificacion");
-});
+Route::get("/usuario/notificacion",[NotificacionController::class, 'mostrar']);
 // FAQ //
-Route::get("/FAQ",function(){
-    return view("faq.verFAQ");
-});
+Route::get("/FAQ",[FAQController::class,'mostrar'])->name('FAQ');
 
 // Reporte //
 
-Route::get("/usuario/reporte",function(){
-    return view("reporte.verReporte");
-});
+Route::get("/usuario/reporte",[ReporteController::class, 'mostrar']);
 ////
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Rutas bloquedas //
+
+ Route::middleware('auth')->group(function () {
+         Route::get('/usuario/miperfil', [UsuarioController::class, 'mostrar'])->name('usuario.miperfil');
+         Route::get('/usuario/tarea/ver', [TareaController::class, 'mostrar'])->name('usuario.tarea.ver');
+         Route::get('/usuario/reporte', [ReporteController::class, 'mostrar'])->name('usuario.reporte');
+         Route::get('/usuario/notificacion', [NotificacionController::class, 'mostrar'])->name('usuario.notificacion');        
+     });

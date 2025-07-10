@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text("mensaje");
             $table->date("fechaNotificacion");
             $table->foreignId('idUsuario')->constrained('users')->onDelete('cascade');
+            $table->foreignId('idTarea')->constrained('tareas')->onDelete('cascade');
         });
     }
 

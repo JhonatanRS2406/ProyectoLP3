@@ -3,64 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Models\FAQ;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreFAQRequest;
 use App\Http\Requests\UpdateFAQRequest;
 
 class FAQController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function mostrar()
     {
-        //
+        $faqs = Faq::all();
+        return view('faq.verFAQ')->with('faqs', $faqs);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function crear()
     {
-        //
+        return view('faq.crearFAQ');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreFAQRequest $request)
+    public function guardar(Request $request)
     {
-        //
+        $faq = new Faq();
+        $faq->pregunta = $request->input('pregunta');
+        $faq->respuesta = $request->input('respuesta');
+        $faq->save();
+        return "FAQ guardada";
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(FAQ $fAQ)
+    public function seleccionar($id)
     {
-        //
+        $faq = Faq::find($id);
+        return view('faq.verFAQ')->with('faq', $faq);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(FAQ $fAQ)
+    public function editar($id)
     {
-        //
+        $faq = Faq::find($id);
+        return view('faq.actualizarFAQ')->with('faq', $faq);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFAQRequest $request, FAQ $fAQ)
+    public function actualizar(Request $request, $id)
     {
-        //
+        $faq = Faq::find($id);
+      $faq->pregunta = $request->input('pregunta');
+        $faq->respuesta = $request->input('respuesta');
+        $faq->save();
+        return "FAQ actualizada";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(FAQ $fAQ)
+    public function eliminar($id)
     {
-        //
+        $faq = Faq::find($id);
+        $faq->delete();
+        return "FAQ eliminada";
     }
 }

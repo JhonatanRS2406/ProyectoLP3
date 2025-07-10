@@ -3,64 +3,63 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tarea;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreTareaRequest;
 use App\Http\Requests\UpdateTareaRequest;
 
 class TareaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+     public function mostrar()
     {
-        //
+        $tareas = Tarea::all();
+        return view('tarea.verTarea')->with('tareas', $tareas);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function crear()
     {
-        //
+        return view('tarea.crearTarea');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreTareaRequest $request)
+    public function guardar(Request $request)
     {
-        //
+        $tarea = new Tarea();
+        $tarea->titulo = $request->input('titulo');
+        $tarea->descripcion = $request->input('descripcion');
+        $tarea->tipo = $request->input('tipo');
+        $tarea->estado = $request->input('estado');
+        $tarea->idUsuario = $request->input('idusuario');
+        $tarea->save();
+        return "Tarea guardada";
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tarea $tarea)
+    public function seleccionar($id)
     {
-        //
+        $tarea = Tarea::find($id);
+        return view('tarea.verTarea')->with('tarea', $tarea);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tarea $tarea)
+    public function editar($id)
     {
-        //
+        $tarea = Tarea::find($id);
+        return view('tarea.actualizarTarea')->with('tarea', $tarea);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTareaRequest $request, Tarea $tarea)
+    public function actualizar(Request $request, $id)
     {
-        //
+        $tarea = Tarea::find($id);
+        $tarea->titulo = $request->input('titulo');
+        $tarea->descripcion = $request->input('descripcion');
+        $tarea->tipo = $request->input('tipo');
+        $tarea->estado = $request->input('estado');
+        $tarea->idUsuario = $request->input('idusuario');
+        $tarea->save();
+        return "Tarea actualizada";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tarea $tarea)
+    public function eliminar($id)
     {
-        //
+        $tarea = Tarea::find($id);
+        $tarea->delete();
+        return "Tarea eliminada";
     }
 }

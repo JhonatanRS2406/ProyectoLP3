@@ -3,64 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Models\Actividad;
-use App\Http\Requests\StoreActividadRequest;
-use App\Http\Requests\UpdateActividadRequest;
+use Illuminate\Http\Request;
 
 class ActividadController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function mostrar()
     {
-        //
+        $actividades = Actividad::all();
+        return view('actividad.verActividad')->with('actividades', $actividades);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function crear()
     {
-        //
+        return view('actividad.crearActividad');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreActividadRequest $request)
+    public function guardar(Request $request)
     {
-        //
+        $actividad = new Actividad();
+        $actividad->tipo = $request->input('tipo');
+        $actividad->fecha = $request->input('descripcion');
+        $actividad->idUsuario = $request->input('idusuario');
+        $actividad->save();
+        return "Actividad guardada";
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Actividad $actividad)
+    public function seleccionar($id)
     {
-        //
+        $actividad = Actividad::find($id);
+        return view('actividad.verActividad')->with('actividad', $actividad);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Actividad $actividad)
+    public function editar($id)
     {
-        //
+        $actividad = Actividad::find($id);
+        return view('actividad.actualizarActividad')->with('actividad', $actividad);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateActividadRequest $request, Actividad $actividad)
+    public function actualizar(Request $request, $id)
     {
-        //
+        $actividad = Actividad::find($id);
+        $actividad->tipo = $request->input('tipo');
+        $actividad->fecha = $request->input('descripcion');
+        $actividad->idUsuario = $request->input('idusuario');
+        $actividad->save();
+        return "Actividad actualizada";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Actividad $actividad)
+    public function eliminar($id)
     {
-        //
+        $actividad = Actividad::find($id);
+        $actividad->delete();
+        return "Actividad eliminada";
     }
 }

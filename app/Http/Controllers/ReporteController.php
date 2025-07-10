@@ -3,64 +3,61 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reporte;
-use App\Http\Requests\StoreReporteRequest;
-use App\Http\Requests\UpdateReporteRequest;
+use Illuminate\Http\Request;
 
 class ReporteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function mostrar()
     {
-        //
+        $reportes = Reporte::all();
+        return view('reporte.verReporte')->with('reportes', $reportes);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function crear()
     {
-        //
+        return view('reporte.crearReporte');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreReporteRequest $request)
+    public function guardar(Request $request)
     {
-        //
+        $reporte = new Reporte();
+        $reporte->tipo = $request->input('tipo');
+        $reporte->semanaReporte = $request->input('semanaReporte');
+        $reporte->estadisticas = $request->input('estadisticas');
+        $reporte->recomendacion = $request->input('recomendacion');
+        $reporte->idUsuario = $request->input('idUsuario');
+        $reporte->save();
+        return "Reporte guardado";
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Reporte $reporte)
+    public function seleccionar($id)
     {
-        //
+        $reporte = Reporte::find($id);
+        return view('reporte.verReporte')->with('reporte', $reporte);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Reporte $reporte)
+    public function editar($id)
     {
-        //
+        $reporte = Reporte::find($id);
+        return view('reporte.actualizarReporte')->with('reporte', $reporte);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateReporteRequest $request, Reporte $reporte)
+    public function actualizar(Request $request, $id)
     {
-        //
+        $reporte = new Reporte();
+        $reporte->tipo = $request->input('tipo');
+        $reporte->semanaReporte = $request->input('semanaReporte');
+        $reporte->estadisticas = $request->input('estadisticas');
+        $reporte->recomendacion = $request->input('recomendacion');
+        $reporte->idUsuario = $request->input('idUsuario');
+        $reporte->save();
+        return "Reporte actualizado";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reporte $reporte)
+    public function eliminar($id)
     {
-        //
+        $reporte = Reporte::find($id);
+        $reporte->delete();
+        return "Reporte eliminado";
     }
 }

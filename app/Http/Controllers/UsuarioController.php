@@ -2,65 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;
-use App\Http\Requests\StoreUsuarioRequest;
-use App\Http\Requests\UpdateUsuarioRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function mostrar()
     {
-        //
+        $usuarios = User::all();
+        return view('usuario.verUsuario')->with('usuarios', $usuarios);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function crear()
     {
-        //
+        return view('auth.register');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreUsuarioRequest $request)
+    public function guardar(Request $request)
     {
-        //
+        $usuario = new User();
+        $usuario->nombre = $request->input('nombre');
+        $usuario->apellido = $request->input('apellido');
+        $usuario->email = $request->input('email');
+        $usuario->password = bcrypt($request->input('password'));
+        $usuario->nacionalidad = $request->input('nacionalidad');
+        $usuario->save();
+        return "Usuario guardado";
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Usuario $usuario)
+    public function seleccionar($id)
     {
-        //
+        $usuario = User::find($id);
+        return view('usuario.verUsuario')->with('usuario', $usuario);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Usuario $usuario)
+    public function editar($id)
     {
-        //
+        $usuario = User::find($id);
+        return view('usuario.actualizarUsuario')->with('usuario', $usuario);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateUsuarioRequest $request, Usuario $usuario)
+    public function actualizar(Request $request, $id)
     {
-        //
+        $usuario = User::findOrFail($id);
+        $usuario->nombre = $request->input('nombre');
+        $usuario->apellido = $request->input('apellido');
+        $usuario->email = $request->input('email');
+        if ($request->input('password')) {
+            $usuario->password = bcrypt($request->input('password'));
+        }
+        $usuario->nacionalidad = $request->input('nacionalidad');
+        $usuario->save();
+        return "Usuario actualizado";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Usuario $usuario)
+    public function eliminar($id)
     {
-        //
+        $usuario = User::find($id);
+        $usuario->delete();
+        return "Usuario eliminado";
     }
 }

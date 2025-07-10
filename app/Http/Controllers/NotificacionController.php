@@ -3,64 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notificacion;
-use App\Http\Requests\StoreNotificacionRequest;
-use App\Http\Requests\UpdateNotificacionRequest;
+use Illuminate\Http\Request;
 
 class NotificacionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function mostrar()
     {
-        //
+        $notificaciones = Notificacion::all();
+        return view('notificacion.verNotificacion')->with('notificaciones', $notificaciones);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function crear()
     {
-        //
+        return view('notificacion.crearNotificacion');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreNotificacionRequest $request)
+    public function guardar(Request $request)
     {
-        //
+        $notificacion = new Notificacion();
+        $notificacion->mensaje = $request->input('mensaje');
+        $notificacion->fechaNotificacion= $request->input('fechaNotificacion');
+        $notificacion->idUsuario = $request->input('idUsuario');
+        $notificacion->idTarea = $request->input('idTarea');
+        $notificacion->save();
+        return "Notificación guardada";
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Notificacion $notificacion)
+    public function seleccionar($id)
     {
-        //
+        $notificacion = Notificacion::find($id);
+        return view('notificacion.verNotificacion')->with('notificacion', $notificacion);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Notificacion $notificacion)
+    public function editar($id)
     {
-        //
+        $notificacion = Notificacion::find($id);
+        return view('notificacion.actualizarNotificacion')->with('notificacion', $notificacion);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateNotificacionRequest $request, Notificacion $notificacion)
+    public function actualizar(Request $request, $id)
     {
-        //
+        $notificacion = Notificacion::find($id);
+        $notificacion->mensaje = $request->input('mensaje');
+        $notificacion->fechaNotificacion= $request->input('fechaNotificacion');
+        $notificacion->idUsuario = $request->input('idUsuario');
+        $notificacion->idTarea = $request->input('idTarea');
+        $notificacion->save();
+        return "Notificación actualizada";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Notificacion $notificacion)
+    public function eliminar($id)
     {
-        //
+        $notificacion = Notificacion::find($id);
+        $notificacion->delete();
+        return "Notificación eliminada";
     }
 }

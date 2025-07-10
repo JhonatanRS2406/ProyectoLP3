@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>Mi Perfil</title>
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
-    
         <style>
             .navbar {
                 background-color: #90EE90; 
@@ -57,15 +54,16 @@
                 border-collapse: collapse;
                 width: 50%;
             }
-            th {
+            th, td {
                 border: 1px solid black;
                 padding: 0.5rem;
+            }
+            th {
                 background-color: #f4f4f4;
             }
         </style>
     </head>
     <body>
-     
         <nav class="navbar">
             <div class="logo">Healtnny</div>
             <ul>
@@ -75,56 +73,51 @@
                 <li><a href="/usuario/notificacion">Notificaciones</a></li>
                 <li><a href="/FAQ">FAQ</a></li>
             </ul>
-           <ul>
-                  @if (Route::has('login'))
-                        @auth
-                            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                                @csrf
-                                <button type="submit">
-                                    Cerrar Sesión
-                                </button>
-                            </form>
-                        @else
-                            <a
-                                href="{{ route('login') }}"
-                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                            >
-                                Iniciar Sesión
+            <ul>
+                @if (Route::has('login'))
+                    @auth
+                        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit">Cerrar Sesión</button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                            Iniciar Sesión
+                        </a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                Registrar
                             </a>
-                            @if (Route::has('register'))
-                                <a
-                                    href="{{ route('register') }}"
-                                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                                >
-                                    Registrar
-                                </a>
-                            @endif
-                        @endauth
-                    @endif
-
+                        @endif
+                    @endauth
+                @endif
             </ul>
         </nav>
 
         <div class="content">
-            <h1>Mi perfil</h1>
+            <h1>Mi Perfil</h1>
             <table border="1px">
                 <tr>
                     <th>Nombres</th>
-                    <th>aqui va el nombre del usuario</th>       
+                    <td>{{ Auth::user()->name }}</td>       
                 </tr>
                 <tr>
                     <th>Apellidos</th>
-                    <th>aqui va el apellido del usuario</th>
+                    <td>{{ Auth::user()->lastname ?? 'No especificado' }}</td>
                 </tr>
                 <tr>
                     <th>Correo</th>
-                    <th>aqui va el correo del usuario</th>
+                    <td>{{ Auth::user()->email }}</td>
                 </tr>
                 <tr>
                     <th>Nacionalidad</th>
-                    <th>aqui va la nacionalidad</th>   
+                    <td>{{ Auth::user()->nationality ?? 'No especificado' }}</td>   
                 </tr>    
             </table>
+             <div class="button-container">
+                <button class="button edit-button" onclick="if(confirm('¿Estás seguro de que deseas editar tu perfil?')) window.location.href='/usuario/actualizar';">Editar</button>
+                
+            </div>
         </div>
     </body>
 </html>
